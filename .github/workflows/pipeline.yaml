@@ -1,0 +1,31 @@
+name: CI Pipeline
+
+# What action in Github should start this pipeline:
+on: 
+  # We only want to restrict it when changes are pushed to the main branch
+  push: 
+    # So this means if we push our changes to other features branches, nothing happens. Only if we push merge to the main, our production ready branch, the pipeline will then run 
+    # This prevents unnecessary builds from every branch and ensures that main always stays tested 
+    branches: [ main ]
+
+# Job is a group of steps that run together. 
+# Think of it as a container where multiple actions run together in sequence
+jobs: 
+  build:
+    runs-on: ubuntu-latest # Why ubuntu? Because it is fast lightweight and is widely supported
+
+    # The steps here are the actual instructions that needs to be executed here one after the other
+    steps: 
+      - name: Checkout code # Each step has a name
+        uses: actions/checkout@v5 # this means we are using a bre-built github action
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-versions: 16
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test #Typically done using Jest or some other framework
