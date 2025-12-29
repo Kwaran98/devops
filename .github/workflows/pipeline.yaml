@@ -29,3 +29,6 @@ jobs:
 
       - name: Run tests
         run: npm test #Typically done using Jest or some other framework
+
+
+# This pipeline here that we have created, will run on every single push 
